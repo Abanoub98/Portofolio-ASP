@@ -1,0 +1,36 @@
+.form-group{
+    margin-bottom: 23px;
+    position: relative;
+}
+
+label {
+    text-transform: uppercase;
+    font-weight: 800;
+    margin-bottom: 3px;
+}
+
+input {
+    border: 1px solid #ebebeb;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -o-border-radius: 5px;
+    -ms-border-radius: 5px;
+    box-sizing: border-box;
+    padding: 15px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: 'Montserrat';
+}
+
+.service{
+    border-radius: 50%;
+    font: inherit;
+    padding: 0.5em 0.01em;
+    background-color: #e1e1e1;
+    font: sans-serif;
+      text-shadow: 0 1px 1px hsl(0 0% 0% / 20%);
+    margin: 1rem;
+  
+    text-align: center;
+  }

@@ -1,0 +1,142 @@
+@model ParentHomeViewModel
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h4>About Us</h4>
+              <ul>
+                <p>
+            Cross developers was founded on 2021. Under the supervision of Eng.Abanoub Rafaat
+            and Eng.Kirollos Hany and they are the current administrators
+                </p>
+                <li>
+                  <span class="arrow-right" style="color: #ffffff"
+                    ><i class="fa fa-angle-right" aria-hidden="true"></i></span
+                  ><a href="#container1">Learn more about us</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h4>Portofolio</h4>
+              <ul>
+                @if(Model.LatestProjects != default(ICollection<Project>))
+                  {
+                    foreach(var project in Model.LatestProjects)
+                    {
+                      <li><a asp-action="details" asp-controller="projects" asp-route-id="@project.Id" target="_blank">@project.Title</a></li>
+                    }
+                  }
+                <li><a target="_blank" asp-action="index" asp-controller="projects">View more</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h4>Services</h4>
+              <ul>
+                @if(Model.LatestServices != default(ICollection<Service>))
+                  {
+                    foreach(var service in Model.LatestServices)
+                    {
+                      <li><a>@service.ServiceName</a></li>
+                    }
+                  }
+                <li><a target="_blank" asp-action="index" asp-controller="services">View more</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h4>Resources</h4>
+              <ul>
+                <li><a href="#">Courses</a></li>
+                <li><a href="#">Materials</a></li>
+                <li><a href="#">Software Engineering</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="single-footer-widget">
+              <h4>Contact us</h4>
+              <p>Request our services or make an inquiry</p>
+              <div class="" id="mc_embed_signup">
+                <form
+                  target="_blank"
+                  action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                  method="get"
+                >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="EMAIL"
+                      placeholder="Enter Email Address"
+                      onfocus="this.placeholder = ''"
+                      onblur="this.placeholder = 'Enter Email Address '"
+                      required=""
+                      type="email"
+                    />
+                    <div class="input-group-btn">
+                      <button class="btn btn-default" type="submit">
+                        <span class="lnr lnr-arrow-right"></span>
+                      </button>
+                    </div>
+                    <div class="info"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="footer-bottom row align-items-center justify-content-between"
+        >
+          <p class="footer-text m-0 col-lg-6 col-md-12">
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+            Copyright Cross Developers &copy;
+            <script>
+              document.write(new Date().getFullYear());
+            </script>
+            -- All rights reserved
+            <a>CrossDevelopers</a>
+            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+          </p>
+          <div class="col-lg-6 col-sm-12 footer-social">
+            <ul
+              class="list-unstyled list-inline"
+              style="text-transform: uppercase; letter-spacing: 15px"
+            >
+              <i
+                onclick="window.open('#')"
+                class="fab fa-facebook"
+                aria-hidden="true"
+                style="color: #3b5999"
+              ></i>
+              <i
+                onclick="window.open('#')"
+                class="fab fa-instagram"
+                aria-hidden="true"
+                style="color: #cd486b"
+              ></i>
+              <i
+                onclick="window.open('#')"
+                class="fab fa-twitter"
+                aria-hidden="true"
+                style="color: #55acee"
+              ></i>
+              <i
+                onclick="window.open('https://www.youtube.com/user/IEEEFCIHSB ','_blank')"
+                class="fab fa-youtube"
+                aria-hidden="true"
+                style="color: #cd201f"
+              ></i>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- End footer Area -->

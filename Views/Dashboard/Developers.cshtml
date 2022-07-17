@@ -1,0 +1,47 @@
+@{
+    Layout = "_DashboardLayout";
+    ViewData[PaginationCurrentPage] = Model.UsersPagination.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.UsersPagination.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.UsersPagination.DisplayCount;
+}
+@model MembersDashboardVM
+      <!-- Start popular-courses Area --> 
+			<section class="popular-courses-area section-gap courses-page">
+				<div class="container">						
+					<div class="row">	
+						@if(Model.UsersPagination.Collection != default(ICollection<User>))
+							{
+								foreach(var user in Model.UsersPagination.Collection)
+								{
+									<div class="single-popular-carusel col-lg-3 col-md-6">
+										<div class="thumb-wrap relative">
+											<div class="thumb relative">
+												<div class="overlay overlay-bg"></div>	
+                        <a asp-action="profile" asp-controller="home" asp-route-id="@user.Id" target="_blank">
+                          <img class="img-fluid" src="~/@user.ImagePath" alt="User image">
+                        </a>
+											</div>
+										</div>
+										<div class="details">
+											<a>
+												<h4>
+													@user.UserName 
+												</h4>
+											</a>
+											<p>@user.Specialization<br>
+											Joined : @user.CreatedAt.ToString(DateFormat)
+											</p>
+                      <a class="mdi mdi-delete-forever clickable" style="color:white !important;" asp-action="delete" asp-controller="user" asp-route-id="@user.Id" is-delete="1"></a>
+										</div>
+									</div>
+								}
+							}											
+					</div>
+				</div>	
+    @{
+        await Html.RenderPartialAsync("_PaginationPartial");
+        await Html.RenderPartialAsync("_DeleteBtnPartial");
+    }
+			</section>
+<!--End Profile Card-->
+<!-- End cta-two Area -->

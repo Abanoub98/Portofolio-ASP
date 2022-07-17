@@ -1,0 +1,108 @@
+@{
+    Layout = "";
+}
+@model CreateProfileViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Register | Portofolio</title>
+    <!-- Font Icon -->
+    <link rel="shortcut icon" href="~/img/iconCross.png" />
+    <link rel="stylesheet" href="~/fonts/material-icon/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="~/vendor/jquery-ui/jquery-ui.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css" />
+</head>
+<body>
+    <div class="main">
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content">
+                    <form method="POST" id="signup-form" class="signup-form" asp-action="create" asp-controller="user" enctype="multipart/form-data">
+                        <div asp-validation-summary="All"></div>
+                        @if(TempData[ResultMessageKey] != null)
+                        {
+                            ResultMsgViewModel resultVM = TempData.GetResultMessage();
+                            <div class="modal-header">
+                            <div class="@resultVM.CssClass">@resultVM.Message</div>
+                            </div>
+                        }
+                        <input type="hidden" asp-for="ReturnAction" value="register"/>
+                        <input type="hidden" asp-for="ReturnController" value="user"/>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profile_pic">Profile Picture</label>
+                                <input type="file" accept="image/*" class="form-input" name="userImageFile"/>
+                            </div>                 
+                        </div>
+                        <div class="form-group">
+                            <label for="user_name">Username</label>
+                            <input type="text" class="form-input" asp-for="User.UserName"/>
+                            <span asp-validation-for="User.UserName"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Specialiaztion">Specialiaztion</label>
+                            <input type="text" class="form-input" asp-for="User.Specialization"/>
+                            <span asp-validation-for="User.Specialization"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone_number">Phone number</label>
+                            <input type="number" class="form-input"  asp-for="User.PhoneNumber"/>
+                            <span asp-validation-for="User.PhoneNumber"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-input" asp-for="User.Email"/>
+                            <span asp-validation-for="User.Email"></span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-input" asp-for="Password"/>
+                                <span asp-validation-for="Password"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="re_password">Confirm password</label>
+                                <input type="password" class="form-input" asp-for="ConfirmPassword"/>
+                                <span asp-validation-for="ConfirmPassword"></span>
+                            </div>
+                        </div>
+                        <div class="form-text">
+                            <a href="#" class="add-info-link"><i class="zmdi zmdi-chevron-right"></i>Additional info</a>
+                            <div class="add_info">
+                                @if(Model.LinkTypes != default(ICollection<LinkType>))
+                                {
+                                    foreach(var lt in Model.LinkTypes)
+                                    {
+                                        <div class="form-group">
+                                                <label for="@lt.Type">@lt.Type<i class="@LinkIconsDictionary[lt.Type]" style="color: #0a66c2;"></i></label>
+                                                <input type="hidden" value="@lt.Id" asp-for="LinkTypeIds"/>
+                                                <input type="url" class="form-input" asp-for="Links"/>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <a asp-action="login" asp-controller="user" class="sign-btn">Sign in<i class="fas fa-long-arrow-alt-right sign-icon"></i></a>
+                            <input type="submit" name="submit" id="submit" class="form-submit" value="Submit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- JS -->
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/js/main-register.js"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+</body>
+</html>

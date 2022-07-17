@@ -1,0 +1,32 @@
+.notification-circle{
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    padding: 5px;
+    color: #000;
+    text-align: center;
+    font: 16px Arial, sans-serif;
+}
+
+.bg-notification{
+    background-color: #8f5fe8;
+}
+
+.bg{
+    background-color: #154864 !important;
+}
+
+tr:hover{
+    background-color: #000 !important;
+}
+a:hover{
+    color: inherit !important;
+}
+
+.single-blog .details-btn{
+    background-color: white ;
+}
+
+.hover-blue:hover{
+    color: #154864 !important;
+}

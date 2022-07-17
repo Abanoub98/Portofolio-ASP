@@ -1,0 +1,277 @@
+﻿    @{
+      ViewData[TitleKey] = "Home";
+    }
+    @model HomeViewModel
+    @{
+      await Html.RenderPartialAsync("_LongBanner");
+    }
+    <!-- Start feature Area -->
+    <section class="feature-area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Dashboard</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>view and customize your own portfolio</p>
+                <a asp-action="login" asp-controller="user" target="_blank">Log In</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Services</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>
+                We offer multiple services ensuring that is made from a highly technical and experienced developers
+                </p>
+                <a asp-action="index" asp-controller="services" target="_blank">Details</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="single-feature">
+              <div class="title">
+                <h4>Developers</h4>
+              </div>
+              <div class="desc-wrap">
+                <p>Check out our developers</p>
+                <a asp-action="developers" asp-controller="home" target="_blank">View</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End feature Area -->
+
+    <!-- Start info Area -->
+    <section class="info-area pb-120">
+      <div id="container1">
+      
+        <a id="o1"
+          ><img
+            src="~/img/logoCross.png"
+            width="150px"
+            height="40px"
+            alt=""
+            title=""
+        /></a>
+        <br />
+        <br />
+        <div id="content" font-family: Georgia, Times New Roman, Times,serif;>
+          <strong id="o2"><dd>OUR STORY</dd></strong>
+          <dd id="o3">
+            Cross developers was founded on 2021.Under the supervision of Eng.Abanoub Rafaat
+            and Eng.Kirollos Hany and they are the current administrators.
+          </dd>
+          <br />
+          <dd id="o3">
+            Cross developers is our Portfolio website which is created to publish our experiences 
+            and projects in addition to offering portfolio hosting service where everyone can 
+            find a totally free of cost way to host their portfolio and publish their knowledge and experience
+            we take care of all the technical issues so that you can simply create
+            responsive portfolio with minimum effort with full control.
+            It’s such a real example
+            that represents the efforts of Cross developers helping to spread people's knowledge and experience.
+          </dd>
+          <br />
+        </div>
+      </div>
+    </section>
+    <!-- End info Area -->
+
+    <!-- Start course-mission Area -->
+    <section class="course-mission-area pb-120">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">WHO ARE WE</h1>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 accordion-left">
+            <!-- accordion 2 start-->
+            <dl class="accordion">
+              <dt>
+                <a href="">Our Mission</a>
+              </dt>
+              <dd id="m">
+              Grouping your whole career in one site and link to your own resume and show the 
+              world your knowledge and experiences
+              </dd>
+              <dt>
+                <a href="">Why choose us</a>
+              </dt>
+              <dd>
+                We are offering a totally free of cost way to host your portfolio 
+                taking full control on it you can manage your profile provide your projects, 
+                knowledge, certificates and social links . we don't ask for any personal information
+                , visa or credits simply create an account and start using the website
+              </dd>
+            </dl>
+            <!-- accordion 2 end-->
+          </div>
+          <div
+            class="
+              col-md-6
+              IEEE
+              justify-content-center
+              align-items-center
+              d-flex
+              relative
+            "
+          >
+            <div class="overlay overlay-bg"></div>
+            <video
+              class="play-btn"
+              id="info-video"
+              width="480px"
+              height="300px"
+              controls
+            >
+              <source src="~/img/My Movie.mp4" />
+            </video>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End course-mission Area -->
+    <!-- Start Latest Post -->
+    <div class="latest-leaders">
+      <div class="container">
+        <h2 class="text-center">Founders</h2>
+        <p class="section-box text-center">
+          High expectations, new challenges, hard obstacles and great
+          achievements are coming<br />
+          But whatever how hard it is, we're all here to support and help you.
+        </p>
+        <div class="row">
+          @if(Model.Founders != default(ICollection<User>))
+            {
+              foreach(var founder in Model.Founders)
+              {
+                <div class="col-md-6 col-lg-4 mx-auto zero-margin-mobile">
+                  <div class="card">
+                    <img src="~/@founder.ImagePath" class="card-img-top" alt="Founder image" />
+                    <div class="card-body">
+                      <a
+                        asp-action="profile"
+                        asp-controller="home"
+                        asp-route-id="@founder.Id"
+                        target="_blank"
+                      >
+                        <h5 class="card-subtitle mb-2 text-muted">
+                          @founder.UserName
+                        </h5></a>
+                    </div>
+                  </div>
+              </div>
+              }
+            }
+        </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Latest Post -->
+    <!-- Start upcoming-event Area -->
+    <section class="upcoming-event-area section-gap">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">Latest Services</h1>
+              <p>Take a look at our latest services</p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="active-upcoming-event-carusel">
+            @foreach(var service in Model.LatestServices)
+            {
+              <div class="single-carusel row align-items-center">
+              <div class="col-12 col-md-6 thumb">
+                <img class="img-fluid" src="~/@service.ServiceImage" alt="service image" />
+              </div>
+              <div class="detials col-12 col-md-6">
+                <p>@service.CreatedAt.ToString(DateFormat)</p>
+                <a asp-action="details" asp-controller="services" asp-route-id="@service.Id" target="_blank"
+                  ><h4>
+                    @service.ServiceName
+                  </h4></a
+                >
+                <p>@service.ServiceDescription</p>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End upcoming-event Area -->>
+    <!-- Start cta-one Area -->
+    <section class="cta-one-area relative section-gap">
+      <div class="container">
+        <div class="overlay overlay-bg"></div>
+        <div class="row justify-content-center">
+          <div class="wrap">
+            <h1 class="text-white">Join Cross Developers</h1>
+            <p>
+              Become a part of our community and show the world your work!
+            </p>
+            <a class="primary-btn wh" asp-action="register" asp-controller="user">REGISTER</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End cta-one Area -->
+    <section class="blog-area section-gap" id="blog">
+      <div class="container">
+        <div class="row d-flex justify-content-center">
+          <div class="menu-content pb-70 col-lg-8">
+            <div class="title text-center">
+              <h1 class="mb-10">Latest projects from our developers</h1>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          @if(Model.LatestProjects != default(ICollection<Project>))
+            {
+              foreach(var project in Model.LatestProjects)
+              {
+                      <div class="col-lg-3 col-md-6 single-blog">
+                              <div class="thumb">
+                                <img class="img-fluid" src="~/@project.Thumbnail" alt="Project Thumbnail" />
+                              </div>
+                                <p class="meta">@project.CreatedAt.ToString(DateFormat) | By <a target="_blank" asp-action="profile" asp-controller="home" asp-route-id="@project.CreatorId">@project.Creator.UserName</a></p>
+                                <h5>@project.Title</h5>
+                              <p>
+                                @project.Description
+                              </p>
+                              <a
+                                asp-action="details"
+                                asp-controller="projects"
+                                asp-route-id="@project.Id"
+                                target="_blank"
+                                class="
+                                  details-btn
+                                  d-flex
+                                  justify-content-center
+                                  align-items-center
+                                "
+                                ><span class="details">Details</span
+                                ><span class="lnr lnr-arrow-right"></span
+                              ></a>
+                    </div>
+              }
+            }
+        </div>
+      </div>
+    </section>

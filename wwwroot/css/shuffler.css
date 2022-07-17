@@ -1,0 +1,17 @@
+.img-shuffle-btn {
+    text-align: center;
+    color: #8ca4b5;
+    border: solid 1px #a8d2ff;
+    margin: 4px;
+}
+
+.img-shuffle-btn:hover {
+    cursor: pointer;
+    background-color: #30304d;
+    color: #fff;
+}
+
+.active-shuffle {
+    background-color: #30304d;
+    color: #fff;
+}

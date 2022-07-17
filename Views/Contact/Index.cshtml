@@ -1,0 +1,92 @@
+@{
+    ViewData[TitleKey] = "Contact";
+    ViewData[BannerTitleKey] = "Contact Us";
+}
+@model ContactWithServicesViewModel
+    @{
+      await Html.RenderPartialAsync("_ShortBanner");
+    }
+<!-- Start contact-page Area -->
+<section class="contact-page-area section-gap">
+    <div class="container">
+        <div class="row"> 
+            <div class="col-lg-4 d-flex flex-column address-wrap">
+                <div class="single-contact-address d-flex flex-row">
+                    <div class="icon">
+                        <span class="lnr lnr-phone-handset"></span>
+                    </div>
+                    <div class="contact-details">
+                        <h5>+01282692682</h5>
+                        <p>Always Open</p>
+                    </div>
+                </div>
+                <div class="single-contact-address d-flex flex-row">
+                    <div class="icon">
+                        <span class="lnr lnr-envelope"></span>
+                    </div> 
+                    <div class="contact-details">
+                        <h5>crossdevelopers21@gmail.com</h5>
+                        <p>Send us your query anytime!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+            <form class="form-area contact-form text-right" id="myForm" asp-controller="contact"
+                    asp-action="create" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="All"></div>
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+          </div>
+        }
+                    <div class="row">
+                        <div class="col-lg-6 form-group">
+                            <input placeholder="Enter your name" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter your name'" class="common-input mb-20 form-control"
+                                required="" type="text" asp-for="Contact.ContactName">
+                            <span asp-validation-for="Contact.ContactName"></span>
+                            <input placeholder="Enter email address" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter email address'"
+                                class="common-input mb-20 form-control" required="" type="email"
+                                asp-for="Contact.Email">
+                            <span asp-validation-for="Contact.Email"></span>
+                            <input placeholder="Enter phone number" onfocus="this.placeholder = ''"
+                                onblur="this.placeholder = 'Enter phone number'" class="common-input mb-20 form-control"
+                                required="" type="tel" asp-for="Contact.Phone">
+                            <span asp-validation-for="Contact.Phone"></span>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <textarea class="common-textarea form-control" placeholder="Enter Messege"
+                                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Messege'" required=""
+                                asp-for="Contact.Message"></textarea>
+                            <span asp-validation-for="Contact.Message"></span>
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <select multiple="multiple" asp-for="RequestedServicesIds">
+                                @if (Model.Services != default(ICollection<Service>))
+                                {
+                                    @foreach (Service service in Model.Services)
+                                    {
+                                        <option value=@service.Id>
+                                            @service.ServiceName
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="RequestedServicesIds"></span>
+                        </div> 
+                        <div class="col-lg-12">
+                            <div class="alert-msg" style="text-align: left;">
+                                <button class="genric-btn primary" style="float: right;" type="submit">Submit</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End contact-page Area -->

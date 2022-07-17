@@ -1,0 +1,40 @@
+@{
+	Layout = "_DashboardLayout";
+    ViewData[PaginationCurrentPage] = Model.PaginationModel.CurrentPage;
+    ViewData[PaginationMaxPageCount] = Model.PaginationModel.MaxPageCount;
+    ViewData[PaginationDisplayCount] = Model.PaginationModel.DisplayCount;
+}
+@model ProjectsDashboardViewModel
+<!-- Start View All Projects -->
+<section class="popular-courses-area section-gap courses-page">
+    <div class="container">
+         <div class="row">
+            @if (Model.PaginationModel.Collection != default(ICollection<Project>))
+            {
+                @foreach (Project project in Model.PaginationModel.Collection)
+                {
+                    <div class="single-popular-carusel col-lg-3 col-md-6">
+                        <div class="thumb-wrap relative">
+                            <div class="thumb relative">
+                                <div class="overlay overlay-bg"></div>
+                                    <a asp-controller="dashboard" asp-action="projectdetails"  target="_blank" asp-route-id=@project.Id>
+                                          <img class="img-fluid" src="~/@project.Thumbnail" alt="Project thumbnail">
+                                    </a>
+                            </div> 
+                        </div>
+                        <div class="details">
+                                <h4>
+                                    @project.Title
+                                </h4>
+                            <p>@project.Description</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+ @{
+        await Html.RenderPartialAsync("_PaginationPartial");
+}
+
+</section>
+<!-- End View All Projects  -->

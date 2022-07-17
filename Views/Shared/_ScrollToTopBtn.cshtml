@@ -1,0 +1,21 @@
+    <button class="scroll-into-top">
+      <i class="fas fa-arrow-alt-circle-up"></i>
+    </button>
+    <script>
+            //visibilty of scroll to top button
+    window.addEventListener('scroll',(event) => {
+        if(document.documentElement.scrollTop=== 0)
+        {
+            document.getElementsByClassName("scroll-into-top")[0].style.display = "None";
+            
+        }
+        else
+        {
+            document.getElementsByClassName("scroll-into-top")[0].style.display = "Block";
+        }
+    });
+    var scrollButton = document.getElementsByClassName("scroll-into-top")[0];
+    scrollButton.addEventListener("click", function () {
+      document.getElementById("home").scrollIntoView({block: "end", inline: "nearest" });
+    });
+    </script>

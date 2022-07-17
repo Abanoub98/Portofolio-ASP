@@ -1,0 +1,283 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> _userManager
+@model DashboardViewModel
+@{
+  ViewData[TitleKey] = "Dashboard";
+  bool isAdmin = await _userManager.IsInRoleAsync(Model.User, UserRoles.Admin.ToString());
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>@ViewData[TitleKey] | Portofolio</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="~/assets/vendors/mdi/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="~/assets/vendors/css/vendor.bundle.base.css" />
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="~/assets/vendors/jvectormap/jquery-jvectormap.css" />
+  <link rel="stylesheet" href="~/assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+  <link rel="stylesheet" href="~/assets/vendors/owl-carousel-2/owl.carousel.min.css" />
+  <link rel="stylesheet" href="~/assets/vendors/owl-carousel-2/owl.theme.default.min.css" />
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/3.6.95/css/materialdesignicons.css"
+    rel="stylesheet" />
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <!-- endinject -->
+  <!-- Layout styles -->
+  <link rel="stylesheet" href="~/assets/css/style.css" />
+  <link rel="stylesheet" href="~/css/main-dash.css" />
+  <link rel="stylesheet" href="~/css/profile.css" />
+  <link rel="stylesheet" href="~/css/project-details.css"/>
+  <!-- End layout styles -->
+  <link rel="shortcut icon" href="~/img/iconCross.png" />
+  <link rel="stylesheet" href="~/css/dashboard-custom.css"/>
+  <link rel="stylesheet" href="~/css/shuffler.css"/>
+  <link rel="stylesheet" href="~/css/linearicons.css" />
+</head>
+
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_sidebar.html -->
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top bg-transparent">
+        <a class="sidebar-brand brand-logo" asp-action="index" asp-controller="dashboard"><img src="~/img/logoCross.png" alt="logo" /></a>
+        <a class="sidebar-brand brand-logo-mini" asp-action="index" asp-controller="dashboard"><img src="~/img/iconCross.png"
+            alt="logo" /></a>
+      </div>
+      <ul class="nav">
+        <li class="nav-item profile">
+          <div class="profile-desc">
+            <div class="profile-pic">
+              <div class="count-indicator">
+                  <img class="img-xs rounded-circle" src="~/@Model.User.ImagePath" alt="Profile Img" />
+              </div>
+              <div class="profile-name">
+                <h5 class="mb-0 font-weight-normal">@Model.User.UserName</h5>
+              </div>
+            </div>
+            <a href="#" id="profile-dropdown" data-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+            <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
+              aria-labelledby="profile-dropdown">
+              <a class="dropdown-item preview-item bg-color dash-hover light" asp-controller="user" asp-action="profile">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-auto-fix text-primary"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small" style="color:white !important;">
+                    Account
+                  </p>
+                </div>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item preview-item bg-color dash-hover light" asp-action="PasswordChange" asp-controller="user">
+                <div class="preview-thumbnail">
+                  <div class="preview-icon bg-dark rounded-circle">
+                    <i class="mdi mdi-onepassword text-info"></i>
+                  </div>
+                </div>
+                <div class="preview-item-content">
+                  <p class="preview-subject ellipsis mb-1 text-small" style="color:white !important;">
+                    Change Password
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item nav-category">
+          <span class="nav-link">Navigation</span>
+        </li>
+        <li class="nav-item menu-items" id="projectsNavItem">
+          <a class="nav-link" asp-action="index" asp-controller="dashboard">
+            <span class="menu-icon">
+              <i class="mdi mdi-speedometer"></i>
+            </span>
+            <span class="menu-title">Projects</span>
+          </a>
+        </li>
+        @if(isAdmin)
+        {
+                  <li class="nav-item menu-items" id="projectsNavItem">
+                    <a class="nav-link" asp-action="developers" asp-controller="dashboard">
+                      <span class="menu-icon">
+                        <i class="mdi mdi-speedometer"></i>
+                      </span>
+                      <span class="menu-title">Developers</span>
+                    </a>
+                  </li>
+
+                  <li class="nav-item menu-items">
+                        <a class="nav-link" asp-action="Create" asp-controller="User">
+                          <span class="menu-icon">
+                              <i class="mdi mdi-account-plus"></i>
+                            </span>
+                            <span class="menu-title">Create User</span>
+                        </a>
+                  </li>
+
+              <li class="nav-item menu-items">
+                <a class="nav-link d-flex justify-content-between" asp-action="contacts" asp-controller="dashboard">
+                  <div class="d-inline-flex">
+                        <span class="menu-icon">
+                          <i class="mdi mdi-contact-mail"></i>
+                        </span>
+                        <span class="menu-title align-self-center">Contacts</span>
+                  </div>
+                  @if(Model.PendingContactsCount != 0)
+                  {
+                      <span id="pendingContactCount">
+                          <i class="notification-circle bg-notification">@Model.PendingContactsCount</i>
+                      </span>
+                  }
+                </a>
+              </li>
+
+              <li class="nav-item menu-items">
+                    <a class="nav-link" asp-action="services" asp-controller="dashboard">
+                          <span class="menu-icon">
+                            <i class="mdi mdi-layers"></i>
+                          </span>
+                          <span class="menu-title">Services</span>
+                    </a>
+              </li>
+        <li class="nav-item menu-items">
+              <a class="nav-link" asp-action="projectslogs" asp-controller="dashboard">
+                  <span class="menu-icon">
+                      <i class="mdi mdi-clipboard"></i>
+                    </span>
+                    <span class="menu-title">Project Logs</span>
+              </a>
+        </li>
+        }
+        <li class="nav-item menu-items" id="projectsNavItem">
+          <a class="nav-link" asp-action="index" asp-controller="home" target="_blank">
+            <span class="menu-icon">
+              <i class="mdi mdi-home"></i>
+            </span>
+            <span class="menu-title">Home</span>
+          </a>
+        </li>
+        <li class="nav-item menu-items">
+          <a class="nav-link" asp-action="logout" asp-controller="user">
+            <span class="menu-icon">
+              <i class="mdi mdi-logout"></i>
+            </span>
+            <span class="menu-title">Log Out</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar p-0 fixed-top d-flex flex-row">
+        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="~/assets/images/logo-mini.svg"
+              alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" id="navToggle">
+            <span class="mdi mdi-menu"></span>
+          </button>
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown d-none d-lg-block">
+              <a class="nav-link btn btn-primary create-new-button" asp-action="create" asp-controller="projects">+ Create New Project</a>
+            </li>
+            <li class="nav-item dropdown">
+              <div class="nav-link clickable" id="profileDropdown" href="#" data-toggle="dropdown">
+                <div class="navbar-profile">
+                  <img class="img-xs rounded-circle" src="~/@Model.User.ImagePath" alt="Profile Img" />
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">
+                    @Model.User.UserName
+                  </p>
+                  <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                </div>
+              </div>
+              <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                aria-labelledby="profileDropdown">
+                <a class="dropdown-item preview-item bg-color dash-hover light" asp-controller="user" asp-action="profile">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-auto-fix text-success"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject mb-1" style="color:white !important;">Account</p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item preview-item bg-color dash-hover light" asp-action="logout" asp-controller="user">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-logout text-danger"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject mb-1" style="color:white !important;">Log out</p>
+                  </div>
+                </a>
+              </div>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+            data-toggle="offcanvas">
+            <span class="mdi mdi-format-line-spacing"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+          <!--Render body here-->
+          <div class="main-panel">
+              <div class="content-wrapper">
+                @RenderBody()
+               </div>
+          </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <!-- partial -->
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+
+  <!-- container-scroller -->
+  <!-- plugins:js -->
+  <script src="~/assets/vendors/js/vendor.bundle.base.js"></script>
+  <script src="~/assets/js/misc.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="~/assets/js/off-canvas.js"></script>
+  <script src="~/assets/js/hoverable-collapse.js"></script> 
+  <script src="~/assets/js/settings.js"></script> 
+  <script src="~/assets/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page -->
+  <script src="~/assets/js/dashboard.js"></script>
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+  }
+
+    <script src="~/js/easing.min.js"></script>
+    <script src="~/js/hoverIntent.js"></script>
+    <script src="~/js/superfish.min.js"></script>
+    <script src="~/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/jquery.tabs.min.js"></script>
+    <script src="~/js/jquery.nice-select.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/main.js"></script>
+    <script src="~/js/shuffler.js"></script> 
+    <script src="~/js/pending-contact-count.js"></script>
+
+  <!-- End custom js for this page -->
+</body>
+
+</html>

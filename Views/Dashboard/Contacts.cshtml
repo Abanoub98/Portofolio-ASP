@@ -1,0 +1,51 @@
+@{
+    Layout = "_DashboardLayout";
+}
+@model ContactsDashboardViewModel
+              <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body bg">
+                    <h4 class="card-title">Contacts</h4>
+                    <div class="table-responsive">
+                      <table class="table bg">
+                        <thead>
+                          <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>PhoneNumber</th>
+                            <th>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @if(Model.Contacts != default(ICollection<Contact>))
+                            {
+                              @foreach(var contact in Model.Contacts)
+                              {
+                              
+                              <tr class="clickable-bg">
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.ContactName</a></td>
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Email</a></td>
+                                    <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light">@contact.Phone</a></td>
+                                    @{
+                                        var status = contact.Status.Status;
+                                    }
+                                    @if(status == ContactStatuses.Pending.ToString())
+                                    {
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-info">@contact.Status.Status</label></a></td>
+                                    }else if(status == ContactStatuses.InProgress.ToString())
+                                    {
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-warning">@contact.Status.Status</label></a></td>
+                                    }else if(status == ContactStatuses.Completed.ToString())
+                                    {
+                                        <td><a asp-action="contactdetails" asp-controller="contact" asp-route-id="@contact.Id" class="light"><label class="badge badge-success">@contact.Status.Status</label></a></td>
+                                    }
+                                    
+                              </tr>
+                              }
+                            }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>

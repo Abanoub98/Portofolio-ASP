@@ -1,0 +1,23 @@
+.white-bg{
+    background-color: white;
+}
+
+.border-dark-2{
+    border: 2px solid #222222;
+}
+
+.padding-sides-9{
+    padding-left:9px;
+    padding-right:9px;
+}
+
+.padding-vertical-10{
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.active-container{
+    background-color: #0090e7;
+    color:white !important;
+}
+

@@ -1,0 +1,94 @@
+@{
+    Layout = "_DashboardLayout";
+}
+@model CreateProfileViewModel
+<!-- Modal HTML Markup -->
+<div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-xs-center">Create user</h4> 
+      </div>
+      <div asp-validation-summary="All"></div> 
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+          </div>
+        }
+        <input type="hidden" asp-for="ReturnAction" value="create"/>
+        <input type="hidden" asp-for="ReturnController" value="user"/>
+      <div class="modal-body">
+        <form role="form" asp-action="Create" asp-controller="User" enctype="multipart/form-data" method="post">
+          <div class="form-group">
+            <div>
+              <input type="file" accept="image/*" name="userImageFile"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">User Name</label>
+            <div>
+              <input type="text" class="form-control input-lg"  asp-for="User.UserName" value=""/>
+              <span class="text-danger" asp-validation-for="User.UserName"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Specialization</label>
+            <div>
+              <input type="text" class="form-control input-lg" asp-for="User.Specialization" value=""/>
+              <span class="text-danger" asp-validation-for="User.Specialization"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Phone Number</label>
+            <div>
+              <input type="tel" class="form-control input-lg" asp-for="User.PhoneNumber" value=""/>
+              <span asp-validation-for="User.PhoneNumber"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Email</label>
+            <div>
+              <input type="email" class="form-control input-lg" asp-for="User.Email" value=""/>
+              <span class="text-danger" asp-validation-for="User.Email"></span>
+            </div>
+          </div>
+            <div class="form-group">
+            <label class="control-label">Password</label>
+            <div>
+              <input type="password" class="form-control input-lg" asp-for="Password" value=""/>
+              <span class="text-danger" asp-validation-for="Password"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Confirm Password</label>
+            <div>
+              <input type="password" class="form-control input-lg" asp-for="ConfirmPassword" value=""/>
+              <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+            </div>
+          </div>
+          @if(Model.LinkTypes != default(ICollection<LinkType>))
+          {
+            @foreach(var lt in Model.LinkTypes)
+            {
+                <div class="form-group">
+                    <label class="control-label">@lt.Type</label>
+                  <div>
+                  <input type="hidden" value="@lt.Id" asp-for="LinkTypeIds"/>
+                  <input type="url" class="form-control input-lg" asp-for="Links"/>
+                  </div>
+                </div>
+            }
+          }
+          <button type="submit" class="btn-primary btn-block btn-rounded">
+            Create
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

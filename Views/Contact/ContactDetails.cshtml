@@ -1,0 +1,120 @@
+@{
+  Layout = "_DashboardLayout";
+}
+@model ContactDetailsViewModel
+<!--Start Profile Card-->
+
+<div class="page-content page-container" id="page-content">
+  <div class="padding">
+    <div class="row container d-flex justify-content-center">
+      <div class="col-xl-12 col-md-12">
+        <div class="card user-card-full">
+          <div class="row m-l-0 m-r-0">
+            <div class="col-sm-4 bg-c-lite-green user-profile">
+              <div class="card-block text-center text-white">
+                <h6 class="f-w-600">@Model.Contact.ContactName</h6>
+                <p>Created : @Model.Contact.CreatedAt.ToString(DateTimeFormat)</p>
+                <p>Updated : @Model.Contact.UpdatedAt.ToString(DateTimeFormat)</p>
+                <i class="mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16 clickable" data-toggle="modal"
+                  data-target="#editProfileModal"></i>
+                  <a class="mdi mdi-delete-forever clickable light" asp-action="delete" asp-controller="contact" asp-route-id="@Model.Contact.Id" is-delete="1">
+
+                  </a>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="card-block">
+                <h6 class="m-b-20 p-b-5 b-b-default f-w-600 dark">Details</h6>
+                <div class="row">
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600 dark">Email</p>
+                    <h6 class="text-muted f-w-400">
+                      @Model.Contact.Email
+                    </h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600 dark">Phone</p>
+                    <h6 class="text-muted f-w-400">@Model.Contact.Phone</h6>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="m-b-10 f-w-600 dark">Status</p>
+                    <h6 class="text-muted f-w-400">@Model.Contact.Status.Status</h6>
+                  </div>
+                </div>
+                <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600 dark">
+                  Services
+                </h6>
+                <div class="row">
+                  <div class="col-sm-6">
+                    @if (Model.Contact.RequestedServices != default(ICollection<RequestedService>))
+                    {
+                      foreach (var service in Model.Contact.RequestedServices)
+                      {
+                        <h6 class="text-muted f-w-400">@service.AssociatedService.ServiceName</h6>
+                      }
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End Profile Card-->
+
+<!-- Modal HTML Markup -->
+<div id="editProfileModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-xs-center">Edit Contact</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" asp-action="editcontactstatus" asp-controller="contact" enctype="multipart/form-data"
+          method="post">
+        @if(TempData[ResultMessageKey] != null)
+        {
+          ResultMsgViewModel resultVM = TempData.GetResultMessage();
+          <div class="modal-header">
+          <div class="@resultVM.CssClass">@resultVM.Message</div>
+          </div>
+        }
+          <input type="hidden" value="@Model.Contact.Id" asp-for="@Model.Contact.Id" />
+          <div class="form-group">
+            <label class="control-label">Status</label>
+            <div>
+              <input type="text" class="form-control input-lg" value="@Model.Contact.Status.Status" readonly />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label">Statuses</label>
+            <div>
+              <select asp-for="StatusId">
+                @if(Model.ContactStatuses != default(ICollection<ContactStatus>))
+                  {
+                    @foreach (var status in Model.ContactStatuses)
+                    {
+                      <option value="@status.Id" >@status.Status</option>
+                    }
+                  }
+              </select>
+              <span class="text-danger" asp-validation-for="StatusId"></span>
+            </div>
+          </div>
+          <button type="submit" class="btn-primary btn-block btn-rounded">
+            Edit
+          </button>
+        </form>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+@{
+  await Html.RenderPartialAsync("_DeleteBtnPartial");
+}
+<!-- /.modal -->
